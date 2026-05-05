@@ -1,0 +1,5 @@
+Comparison,t-statistic,p-value,Significant (p < 0.05)
+Full model vs Without WGS,-33.92481249400602,9.545402113916792e-225,True
+Full model vs Without ACC,-86.77879250928368,0.0,True
+Full model vs Without numerical features,-50.54713700800003,0.0,True
+Full model vs Without Transformer,44.62487576942887,0.0,True

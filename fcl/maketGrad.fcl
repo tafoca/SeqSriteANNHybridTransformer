@@ -1,0 +1,41 @@
+/*
+	Example: A Maket FIS (fuzzy inference system)
+	Calculates nothing based on 'price', 'consumption' and 'sales'
+
+									Tabueu fotso Laurent Cabrel 
+									laurent.tabueu@gmail.com
+*/
+
+FUNCTION_BLOCK maket	// Block definition (there may be more than one block per file)
+
+VAR_INPUT				// Define input variables
+	price : REAL;
+	consumption : REAL;
+	sales : REAL;
+	duration: REAL;
+END_VAR
+
+VAR_OUTPUT				// Define output variable
+	tip : REAL;
+END_VAR
+
+FUZZIFY price			// Fuzzify input variable 'price': {'q.dec', 'dec' , 's.dec', 'cst', 's.inc','inc','q.inc'}
+	TERM high := (112, 0.1) (115,0.5) (120,1) (125,0.5);
+END_FUZZIFY
+
+FUZZIFY consumption	// Fuzzify input variable 'consumption': {aa'q.dec', ab'dec' , ac's.dec', ad'cst', ae's.inc',af'inc',06'q.inc'}
+	TERM medium := (300, 0.5) (315, 0.3) (320,0.2) (330,0);
+END_FUZZIFY
+
+FUZZIFY sales	// Fuzzify input variable 'sales': {'q.dec', 'dec' , 's.dec', 'cst', 's.inc','inc','q.inc'}
+	TERM low := (140,0.3) (143, 0.7) (145,0.4) (150,0);
+END_FUZZIFY
+
+FUZZIFY duration // Fuzzify input variable 'dure': {'short', 'medium' ,'long'}
+	TERM short :=  (1.6,1) (4, 0);
+	//TERM medium := (1.6, 0) (4, 1) (5.5,0);
+	TERM long := (4, 0) (5.5, 1);
+END_FUZZIFY
+
+
+END_FUNCTION_BLOCK

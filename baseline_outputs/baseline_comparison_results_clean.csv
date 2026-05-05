@@ -1,0 +1,5 @@
+Method,Category,Comparison level,MAE,RMSE,Pearson,R2,Time(s)
+SeqSGriteMinerANN / TransformerRegressor,Proposed hybrid model,Gradual sequential prediction,0.002754,0.003311,0.999989,0.999481,
+SGrite patterns + Random Forest,Hybrid ML baseline,Pattern-to-regression,0.011401,0.035503,0.71455,0.523167,293.410422
+SGrite patterns + Ridge,Simple hybrid baseline,Pattern-to-regression,0.025307,0.062524,0.343441,0.06522,10.343418
+Mean Predictor,Naive baseline,Prediction,0.026459,0.064815,,-6.2e-05,0.000491

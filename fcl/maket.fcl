@@ -1,0 +1,69 @@
+/*
+	Example: A Maket FIS (fuzzy inference system)
+	Calculates nothing based on 'price', 'consumption' and 'sales'
+
+									Tabueu fotso Laurent Cabrel 
+									laurent.tabueu@gmail.com
+*/
+
+FUNCTION_BLOCK maket	// Block definition (there may be more than one block per file)
+
+VAR_INPUT				// Define input variables
+	price : REAL;
+	consumption : REAL;
+	sales : REAL;
+	duration: REAL;
+END_VAR
+
+VAR_OUTPUT				// Define output variable
+	tip : REAL;
+END_VAR
+
+FUZZIFY price			// Fuzzify input variable 'price': {'q.dec', 'dec' , 's.dec', 'cst', 's.inc','inc','q.inc'}
+	//TERM 0q_dec := (-2.41, 1) (-1, 0) ; 
+	TERM dec := (-2.41, 0) (-1,1) (-0.41,0);
+	//TERM ab := (-2.41, 0) (-1,1) (-0.41,0);
+	//TERM s_dec := (-1, 0) (-0.41,1) (0,0);
+	TERM cst := (-0.41,1) (0, 1) (0.41, 0);
+	//TERM ad := (-2.41, 0) (-1,1) (-0.41,0); 
+	TERM s_inc := (0, 0) (0.41,1) (1,0);
+	//TERM ae := (0, 0) (0.41,1) (1,0);
+	//TERM inc := (0.41, 0) (1, 1) (2.41,0);
+	//TERM q_inc := (1, 0) (2.41, 1);
+END_FUZZIFY
+
+FUZZIFY consumption	// Fuzzify input variable 'consumption': {aa'q.dec', ab'dec' , ac's.dec', ad'cst', ae's.inc',af'inc',06'q.inc'}
+	//TERM q_dec := (-2.41, 1) (-1, 0) ; 
+	TERM dec := (-2.41, 0) (-1,1) (-0.41,0);
+	//TERM ab := (-2.41, 0) (-1,1) (-0.41,0);
+	TERM s_dec := (-1, 0) (-0.41,1) (0,0);
+	//TERM ac := (-1, 0) (-0.41,1) (0,0);
+	TERM cst := (-0.41,1) (0, 1) (0.41, 0); 
+	//TERM ad := (-0.41,1) (0, 1) (0.41, 0); 
+	TERM s_inc := (0, 0) (0.41,1) (1,0);
+	//TERM ae := (0, 0) (0.41,1) (1,0);
+	TERM inc := (0.41, 0) (1, 1) (2.41,0);
+	//TERM af := (0.41, 0) (1, 1) (2.41,0);
+	//TERM q_inc := (1, 0) (2.41, 1);
+END_FUZZIFY
+
+FUZZIFY sales	// Fuzzify input variable 'sales': {'q.dec', 'dec' , 's.dec', 'cst', 's.inc','inc','q.inc'}
+	//TERM q_dec := (-2.41, 1) (-1, 0) ; 
+	//TERM dec := (-2.41, 0) (-1,1) (-0.41,0);
+	TERM s_dec := (-1, 0) (-0.41,1) (0,0);
+	//TERM ac := (-1, 0) (-0.41,1) (0,0);
+	//TERM ad := (-0.41,1) (0, 1) (0.41, 0);
+	TERM cst := (-0.41,1) (0, 1) (0.41, 0); 
+	//TERM s_inc := (0, 0) (0.41,1) (1,0);
+	//TERM inc := (0.41, 0) (1, 1) (2.41,0);
+	//TERM q_inc := (1, 0) (2.41, 1);
+END_FUZZIFY
+
+FUZZIFY duration // Fuzzify input variable 'dure': {'short', 'medium' ,'long'}
+	TERM short :=  (1.6,1) (4, 0);
+	//TERM medium := (1.6, 0) (4, 1) (5.5,0);
+	TERM long := (4, 0) (5.5, 1);
+END_FUZZIFY
+
+
+END_FUNCTION_BLOCK

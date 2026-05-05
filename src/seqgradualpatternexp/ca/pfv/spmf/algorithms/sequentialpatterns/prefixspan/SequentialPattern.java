@@ -1,0 +1,203 @@
+package seqgradualpatternexp.ca.pfv.spmf.algorithms.sequentialpatterns.prefixspan;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import seqgradualpatternexp.NumExp.composants.MotifsGraduels;
+
+import seqgradualpatternexp.ca.pfv.spmf.patterns.itemset_list_integers_without_support.Itemset;
+
+/**
+ * This class represents a sequential pattern.
+ * A sequential pattern is a list of itemsets.
+ *
+ * Copyright (c) 2021-2022 Tabueu Fotso Laurent
+ * 
+ */
+ 
+public class SequentialPattern implements Comparable<SequentialPattern>{
+	
+	// the list of gradual itemsets
+	private final List<Itemset> itemsets;
+	
+	// IDs of sequences containing this pattern
+	private List<Integer> sequencesIds;
+	
+	// whether the sequence was found (used in ProSecCo)
+	private boolean isFound = false;
+	
+	// additional support count for the sequential pattern
+	private int additionalSupport = 0;
+
+	
+	/**
+	 * Set the set of IDs of sequence containing this prefix
+	 * @param a set of integer containing sequence IDs
+	 */
+	public void setSequenceIDs(List<Integer> sequencesIds) {
+		this.sequencesIds = sequencesIds;
+	}
+
+	/**
+	 * Defaults constructor
+	 */
+	public SequentialPattern(){
+		itemsets = new ArrayList<>();
+	}
+
+	
+	/**
+	 * Get the relative support of this pattern (a percentage)
+	 * @param sequencecount the number of sequences in the original database
+	 * @return the support as a string
+	 */
+	public String getRelativeSupportFormated(int sequencecount) {
+		double relSupport = ((double)sequencesIds.size()) / ((double) sequencecount);
+		// pretty formating :
+		DecimalFormat format = new DecimalFormat();
+		format.setMinimumFractionDigits(0); 
+		format.setMaximumFractionDigits(5); 
+		return format.format(relSupport);
+	}
+	
+	/**
+	 * Get the absolute support of this pattern.
+	 * @return the support (an integer >= 1)
+	 */
+	public int getAbsoluteSupport(){
+		return sequencesIds.size();
+	}
+
+	/**
+	 * Add an itemset to this sequential pattern
+	 * @param itemset the itemset to be added
+	 */
+	public void addItemset(Itemset itemset) {
+//		itemCount += itemset.size();
+		itemsets.add(itemset);
+	}
+
+	/**
+	 * Copy the sequential pattern
+	 * @return copy of the sequence pattern
+	 */
+	public SequentialPattern copy() {
+		SequentialPattern clone = new SequentialPattern();
+		for (Itemset it : itemsets) {
+			clone.addItemset(it.cloneItemSet());
+		}
+		clone.additionalSupport = this.additionalSupport;
+		clone.sequencesIds = new ArrayList<Integer>(this.sequencesIds);
+		return clone;
+	}
+
+	/**
+	 * Print this sequential pattern to System.out
+	 */
+	public void print() {
+		System.out.print(toString());
+	}
+	
+	/**
+	 * Get a string representation of this sequential pattern, 
+	 * containing the sequence IDs of sequence containing this pattern.
+	 */
+	public String toString() {
+		StringBuilder r = new StringBuilder("");
+		// For each itemset in this sequential pattern
+		for(Itemset itemset : itemsets){
+			r.append('('); // begining of an itemset
+			// For each item in the current itemset
+			for(String item : itemset.getItems()){
+				r.append(item); // append the item and -1 and -2 delimiteur
+				r.append(' ');
+			}
+			r.append(')');// end of an itemset
+		}
+//
+//		//  add the list of sequence IDs that contains this pattern.
+//		if(getSequencesID() != null){
+//			r.append("  Sequence ID: ");
+//			for(Integer id : getSequencesID()){
+//				r.append(id);
+//				r.append(' ');
+//			}
+//		}
+		return r.append("    ").toString();
+	}
+	
+	/**
+	 * Get a string representation of this sequential pattern.
+	 */
+	public String itemsetsToString() {
+		StringBuilder r = new StringBuilder("");
+		for(Itemset itemset : itemsets){
+			r.append('{');
+			for(String item : itemset.getItems()){
+				r.append(item);
+				r.append(' ');
+			}
+			r.append('}');
+		}
+		return r.append("    ").toString();
+	}
+
+	/**
+	 * Get the itemsets in this sequential pattern
+	 * @return a list of itemsets.
+	 */
+	public List<Itemset> getItemsets() {
+		return itemsets;
+	}
+	
+	/**
+	 * Get an itemset at a given position.
+	 * @param index the position
+	 * @return the itemset
+	 */
+	public Itemset get(int index) {
+		return itemsets.get(index);
+	}
+
+	
+	/**
+	 * Get the number of itemsets in this sequential pattern.
+	 * @return the number of itemsets.
+	 */
+	public int size(){
+		return itemsets.size();
+	}
+
+
+
+	public List<Integer> getSequenceIDs() {
+		return sequencesIds;
+	}
+
+	@Override
+	public int compareTo(SequentialPattern o) {
+		if(o == this){
+			return 0;
+		}
+		int compare = this.getAbsoluteSupport() - o.getAbsoluteSupport();
+		if(compare !=0){
+			return compare;
+		}
+
+		return this.hashCode() - o.hashCode();
+	}
+
+	public boolean setIsFound(boolean b) {
+		return isFound;
+		
+	}
+	
+	public boolean isFound() {
+		return isFound;
+	}
+	
+	public void addAdditionalSupport(int additionalSupport) {
+		this.additionalSupport += additionalSupport;
+	}
+
+}
