@@ -84,7 +84,7 @@ SeqSGriteMinerANN/
 ### 1. Clone repository
 
 ```bash
-git clone [https://github.com/yourusername/SeqSGriteMinerANN.git](https://github.com/tafoca/SeqSriteANNHybridTransformer/)
+git clone [https://github.com/tafoca/SeqSriteANNHybridTransformer.git]([https://github.com/tafoca/SeqSriteANNHybridTransformer](https://github.com/tafoca/SeqSriteANNHybridTransformer/)
 cd SeqSGriteMinerANN
 ````
 
